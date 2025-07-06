@@ -1,0 +1,1906 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marcelo D'Ávila - Automações que FALAM</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* RESET E VARIÁVEIS PREMIUM ULTIMATE */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            /* CORES PREMIUM ULTIMATE */
+            --color-bg: #F8F5F0;
+            --color-text-primary: #33353A;
+            --color-text-secondary: #5A5F66;
+            --color-cta: #1A2035;
+            --color-accent: #D4AF37;
+            --pure-white: #ffffff;
+            --success-green: #10b981;
+            --error-red: #ef4444;
+            
+            /* NOVA PALETA DOURADA SOFISTICADA */
+            --white-pure: #FFFFFF;
+            --white-ivory: #FBF9F4;
+            --gold-soft: #EAC08C;
+            --gold-classic: #D4AF37;
+            --gold-rich: #BFA06A;
+            --charcoal-light: #4A4A4C;
+            --smoke-light: #F5F5F7;
+            
+            /* CORES ESPECÍFICAS DO CHAT BUBBLE ULTIMATE */
+            --bubble-bg: rgba(248, 245, 240, 0.95);
+            --bubble-text: #33353A;
+            --bubble-border: #D4AF37;
+            --bubble-shadow: rgba(212, 175, 55, 0.4);
+            --bubble-emerald: #10b981;
+            
+            /* GRADIENTES PREMIUM ULTIMATE */
+            --gradient-gold: linear-gradient(135deg, #D4AF37 0%, #E8C547 100%);
+            --gradient-luxury: linear-gradient(135deg, #F8F5F0 0%, #E8E5E0 50%, #D8D5D0 100%);
+            --gradient-gold-premium: linear-gradient(135deg, #FFD700 0%, #FFA500 25%, #FF8C00 50%, #FFD700 75%, #FFA500 100%);
+            --gradient-regional: linear-gradient(135deg, #D4AF37 0%, #E8C547 50%, #F4D03F 100%);
+            
+            /* SOMBRAS PREMIUM ULTIMATE */
+            --shadow-card: 0 6px 20px rgba(26, 32, 53, 0.1);
+            --shadow-luxury: 0 10px 40px rgba(26, 32, 53, 0.18);
+            --shadow-gold: 0 10px 30px rgba(212, 175, 55, 0.3);
+            --gold-shadow-premium: 0 15px 35px rgba(255, 215, 0, 0.5);
+            --shadow-soft: 0 4px 12px rgba(26, 32, 53, 0.08);
+            
+            /* TRANSIÇÕES ULTRA-RÁPIDAS PARA FLUIDEZ MÁXIMA */
+            --transition-ultra: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-bounce: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        /* LAYOUT PRINCIPAL */
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--gradient-luxury);
+            color: var(--color-text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            max-width: 420px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* LOADING HYPNOTIC PREMIUM - NOVA ADIÇÃO PARA PRENDER ATENÇÃO */
+        .hypnotic-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(212, 175, 55, 0.2);
+            z-index: 1001;
+            overflow: hidden;
+        }
+
+        .hypnotic-progress {
+            height: 100%;
+            background: var(--gradient-gold);
+            width: 0%;
+            transition: width 0.3s ease;
+            position: relative;
+        }
+
+        .hypnotic-progress::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 20px;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+            animation: progressShine 1s linear infinite;
+        }
+
+        @keyframes progressShine {
+            0% { transform: translateX(-20px); }
+            100% { transform: translateX(20px); }
+        }
+
+        /* CHAT BUBBLE PREMIUM ULTIMATE COM REPLAY ULTRA-RÁPIDO */
+        .chat-bubble {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--bubble-bg);
+            backdrop-filter: blur(20px);
+            color: var(--bubble-text);
+            padding: 18px 50px 18px 22px;
+            border-radius: 25px;
+            max-width: 420px;
+            width: calc(100vw - 40px);
+            border: 3px solid var(--bubble-border);
+            box-shadow: 0 12px 35px var(--bubble-shadow);
+            display: none;
+            z-index: 1000;
+            animation: bubbleEnterFast 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .chat-bubble.active { display: block; }
+        .chat-bubble.completed { border-color: var(--bubble-emerald); }
+
+        .chat-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 15px solid transparent;
+            border-top-color: var(--bubble-bg);
+        }
+
+        .bubble-text {
+            font-size: 15px;
+            font-weight: 700;
+            text-align: center;
+            margin: 0;
+            line-height: 1.3;
+        }
+
+        .mic-icon {
+            position: absolute;
+            top: -10px;
+            left: 15px;
+            background: var(--bubble-border);
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            animation: micPulseFast 1.2s infinite;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+        }
+
+        .mic-icon.completed {
+            background: var(--bubble-emerald);
+            animation: checkmarkFast 0.3s ease-out;
+        }
+
+        .replay-btn {
+            position: absolute;
+            top: 50%;
+            right: 15px;
+            transform: translateY(-50%);
+            background: var(--bubble-border);
+            color: white;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            font-size: 11px;
+            opacity: 0;
+            transition: var(--transition-fast);
+        }
+
+        .chat-bubble.completed .replay-btn { 
+            opacity: 1; 
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        @keyframes bubbleEnterFast {
+            0% { opacity: 0; transform: translateX(-50%) translateY(30px) scale(0.8); }
+            100% { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+        }
+
+        @keyframes micPulseFast {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5); }
+        }
+
+        @keyframes checkmarkFast {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        /* SEÇÕES PREMIUM COM TRANSIÇÕES ULTRA-RÁPIDAS */
+        .section {
+            background: var(--color-bg);
+            border-radius: 20px;
+            padding: 30px 25px;
+            margin: 25px 0;
+            box-shadow: var(--shadow-card);
+            border: 2px solid rgba(212, 175, 55, 0.15);
+            position: relative;
+            overflow: hidden;
+            display: none;
+            animation: sectionRevealFast 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .section.active { display: block; }
+
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: var(--gradient-gold);
+        }
+
+        @keyframes sectionRevealFast {
+            from { opacity: 0; transform: translateY(20px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* HERO SECTION PREMIUM */
+        .hero-section { display: block; }
+
+        .hero-title {
+            font-size: 26px;
+            font-weight: 900;
+            background: var(--gradient-gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+        }
+
+        .hero-subtitle {
+            font-size: 17px;
+            color: var(--color-text-secondary);
+            font-weight: 600;
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        /* NAME SECTION PREMIUM */
+        .name-section { display: block; }
+
+        .name-title {
+            font-size: 19px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 22px;
+            color: var(--color-text-secondary);
+        }
+
+        .name-input {
+            width: 100%;
+            padding: 18px 22px;
+            border: 3px solid var(--color-accent);
+            border-radius: 15px;
+            font-size: 17px;
+            margin-bottom: 16px;
+            font-weight: 600;
+            text-align: center;
+            background: var(--pure-white);
+            transition: var(--transition-fast);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .name-input:focus {
+            outline: none;
+            border-color: var(--color-cta);
+            box-shadow: 0 0 0 4px rgba(26, 32, 53, 0.15);
+            transform: scale(1.02);
+        }
+
+        .name-input.error {
+            border-color: var(--error-red);
+            animation: shakeFast 0.4s ease-in-out;
+        }
+
+        @keyframes shakeFast {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-6px); }
+            75% { transform: translateX(6px); }
+        }
+
+        .btn {
+            background: var(--color-cta);
+            color: var(--color-bg);
+            border: none;
+            padding: 18px 32px;
+            border-radius: 15px;
+            font-size: 18px;
+            font-weight: 800;
+            cursor: pointer;
+            width: 100%;
+            transition: var(--transition-fast);
+            box-shadow: var(--shadow-card);
+            letter-spacing: -0.3px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px) scale(1.01);
+            box-shadow: var(--shadow-luxury);
+        }
+
+        /* MENSAGEM PERSONALIZADA PREMIUM ULTRA-RÁPIDA */
+        .personalized-message-section {
+            padding: 0;
+            animation: messageRevealFast 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes messageRevealFast {
+            0% { opacity: 0; transform: scale(0.95) rotateX(10deg); }
+            100% { opacity: 1; transform: scale(1) rotateX(0deg); }
+        }
+
+        /* === BANNER DOURADO PREMIUM - ALINHAMENTO PERFEITO === */
+        .message-header {
+            background: var(--gradient-regional);
+            color: var(--color-cta);
+            padding: 35px 25px;
+            border-radius: 20px 20px 0 0;
+            margin: -30px -25px 20px;
+            position: relative;
+            overflow: hidden;
+            
+            /* CENTRALIZAÇÃO PERFEITA */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 140px;
+        }
+
+        .message-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, var(--color-cta) 0%, var(--color-accent) 50%, var(--color-cta) 100%);
+            box-shadow: 0 2px 8px rgba(26, 32, 53, 0.3);
+        }
+
+        .message-content {
+            text-align: center;
+            width: 100%;
+        }
+
+        .message-title {
+            font-size: 17px;
+            font-weight: 800;
+            margin-bottom: 14px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+            letter-spacing: -0.1px;
+            line-height: 1.3;
+        }
+
+        .message-subtitle {
+            font-size: 13px;
+            opacity: 0.9;
+            font-weight: 600;
+            letter-spacing: 0.2px;
+            line-height: 1.4;
+            max-width: 280px;
+            margin: 0 auto;
+        }
+
+        /* MAPA PREMIUM INTERATIVO ULTRA-RÁPIDO */
+        .map-container {
+            background: rgba(0, 0, 0, 0.06);
+            border-radius: 18px;
+            padding: 25px;
+            margin: 25px 0;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .route-visualization {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .route-point {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 2;
+        }
+
+        .point-marker {
+            font-size: 32px;
+            margin-bottom: 10px;
+            animation: markerPulseFast 1.8s ease-in-out infinite;
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));
+        }
+
+        @keyframes markerPulseFast {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .point-label {
+            background: var(--gradient-gold);
+            color: var(--color-cta);
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 12px;
+            box-shadow: var(--shadow-gold);
+        }
+
+        .route-line {
+            flex: 1;
+            height: 6px;
+            background: var(--gradient-gold);
+            position: relative;
+            margin: 0 20px;
+            border-radius: 3px;
+            overflow: hidden;
+            min-width: 120px;
+        }
+
+        .traveling-pulse {
+            position: absolute;
+            width: 20px;
+            height: 6px;
+            background: var(--pure-white);
+            border-radius: 3px;
+            animation: travelPulseFast 2.5s ease-in-out infinite;
+            box-shadow: 0 0 12px rgba(255, 255, 255, 0.8);
+        }
+
+        @keyframes travelPulseFast {
+            0% { left: -20px; opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { left: calc(100% + 20px); opacity: 0; }
+        }
+
+        .distance-display {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .distance-main {
+            font-size: 26px;
+            font-weight: 900;
+            color: var(--color-accent);
+            margin-bottom: 10px;
+        }
+
+        /* GRID DE DETALHES PREMIUM */
+        .distance-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .distance-item {
+            background: var(--pure-white);
+            padding: 16px 10px;
+            border-radius: 15px;
+            text-align: center;
+            backdrop-filter: blur(15px);
+            box-shadow: var(--shadow-soft);
+            transition: var(--transition-ultra);
+        }
+
+        .distance-item:hover {
+            transform: translateY(-1px);
+        }
+
+        .distance-number {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--color-accent);
+            display: block;
+        }
+
+        .distance-label {
+            font-size: 12px;
+            color: var(--color-text-secondary);
+            font-weight: 600;
+        }
+
+        /* SEÇÃO CONTEXTUAL PREMIUM COM GÍRIAS */
+        .contextual-info-premium {
+            text-align: center;
+            padding: 20px;
+            background: rgba(212, 175, 55, 0.12);
+            border-radius: 18px;
+            margin: 20px 0;
+            border: 2px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .contextual-main-premium {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--color-accent);
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .contextual-secondary {
+            font-size: 16px;
+            color: var(--color-text-primary);
+            line-height: 1.5;
+        }
+
+        .contextual-footer {
+            font-size: 14px;
+            color: var(--color-text-secondary);
+            margin-top: 15px;
+            font-style: italic;
+        }
+
+        /* DISCOVERY SECTION PREMIUM DOURADO SOFISTICADO */
+        .discovery-section {
+            background: var(--white-pure);
+            border: 2px solid var(--gold-soft);
+            animation: discoveryRevealFast 0.5s ease-out;
+            box-shadow: 0 8px 32px rgba(234, 192, 140, 0.15);
+        }
+
+        .discovery-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(135deg, var(--gold-classic) 0%, var(--gold-soft) 100%);
+        }
+
+        @keyframes discoveryRevealFast {
+            0% { opacity: 0; transform: scale(0.98) rotateY(8deg); }
+            100% { opacity: 1; transform: scale(1) rotateY(0deg); }
+        }
+
+        .discovery-items {
+            display: grid;
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .discovery-item {
+            background: var(--white-ivory);
+            backdrop-filter: blur(20px);
+            border: 2px solid var(--gold-classic);
+            border-radius: 18px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: var(--transition-fast);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .discovery-item:hover {
+            transform: translateY(-2px) scale(1.01);
+            background: var(--white-pure);
+            border-color: var(--gold-rich);
+            box-shadow: 0 8px 24px rgba(212, 175, 55, 0.2);
+        }
+
+        .discovery-icon { 
+            font-size: 26px;
+            filter: drop-shadow(2px 2px 4px rgba(212, 175, 55, 0.3));
+        }
+
+        .discovery-label {
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--charcoal-light);
+            line-height: 1.3;
+        }
+
+        /* VÍDEO DEMO PREMIUM */
+        .demo-video {
+            width: 200px;
+            height: 150px;
+            background: linear-gradient(45deg, #F8F5F0, #E8E5E0);
+            border-radius: 25px;
+            margin: 20px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            position: relative;
+            box-shadow: var(--shadow-card);
+        }
+
+        .demo-video:hover { 
+            transform: scale(1.05) rotateY(3deg); 
+            box-shadow: var(--shadow-luxury);
+        }
+
+        .play-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(26, 32, 53, 0.9);
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            transition: var(--transition-ultra);
+        }
+
+        /* TESTE MENTAL PREMIUM ULTRA-RÁPIDO */
+        .mental-test {
+            background: var(--bubble-bg);
+            backdrop-filter: blur(20px);
+            border: 3px solid var(--bubble-border);
+            text-align: center;
+        }
+
+        .test-items {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .test-item {
+            background: white;
+            border: 3px solid rgba(212, 175, 55, 0.3);
+            border-radius: 18px;
+            padding: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: var(--transition-fast);
+        }
+
+        .test-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .test-item.forbidden {
+            background: rgba(255, 71, 87, 0.15);
+            border-color: var(--error-red);
+            animation: forbiddenPulseFast 1.5s infinite;
+        }
+
+        @keyframes forbiddenPulseFast {
+            0%, 100% { box-shadow: 0 0 15px rgba(255, 71, 87, 0.3); }
+            50% { box-shadow: 0 0 25px rgba(255, 71, 87, 0.6); }
+        }
+
+        .test-icon {
+            font-size: 40px;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        /* GRID PARA 5 ITEMS */
+        .test-items-five {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin: 25px 0;
+        }
+
+        .test-items-five .test-item:last-child {
+            grid-column: 1 / -1;
+            max-width: 280px;
+            margin: 0 auto;
+        }
+
+        .revelation {
+            background: rgba(255, 71, 87, 0.15);
+            border: 3px solid var(--error-red);
+            border-radius: 18px;
+            padding: 20px;
+            margin: 25px 0;
+            display: none;
+            animation: revelationGlowFast 2s infinite;
+        }
+
+        @keyframes revelationGlowFast {
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 71, 87, 0.4); }
+            50% { box-shadow: 0 0 30px rgba(255, 71, 87, 0.7); }
+        }
+
+        /* QUIZ PREMIUM */
+        .quiz-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .quiz-option {
+            background: white;
+            border: 3px solid rgba(212, 175, 55, 0.25);
+            padding: 18px 15px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: 700;
+            text-align: center;
+            transition: var(--transition-fast);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .quiz-option:hover {
+            border-color: var(--color-accent);
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: var(--shadow-card);
+        }
+
+        .quiz-option.selected {
+            background: var(--gradient-gold);
+            color: var(--color-cta);
+            border-color: var(--color-accent);
+            transform: scale(1.05);
+        }
+
+        .quiz-emoji {
+            font-size: 22px;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        /* OFERTA PREMIUM */
+        .offer-section {
+            background: var(--gradient-gold);
+            color: var(--color-cta);
+            text-align: center;
+        }
+
+        .offer-price {
+            font-size: 38px;
+            font-weight: 900;
+            margin: 20px 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .offer-savings {
+            background: var(--success-green);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 700;
+            display: inline-block;
+            margin: 15px 0;
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3);
+        }
+
+        /* CHECKOUT PREMIUM */
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--color-text-secondary);
+            font-size: 14px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 3px solid rgba(212, 175, 55, 0.3);
+            border-radius: 12px;
+            font-size: 16px;
+            background: #F8F5F0;
+            transition: var(--transition-ultra);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--color-accent);
+            background: white;
+            transform: scale(1.01);
+        }
+
+        /* WHATSAPP PREMIUM */
+        .whatsapp-btn {
+            background: #25D366;
+            color: white;
+            border: none;
+            padding: 16px 25px;
+            border-radius: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: var(--transition-fast);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.3);
+        }
+
+        .whatsapp-btn:hover {
+            background: #128C7E;
+            transform: translateY(-2px) scale(1.01);
+            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4);
+        }
+
+        /* INDICADORES VISUAIS HIPNÓTICOS - NOVA ADIÇÃO */
+        .attention-pulse {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 12px;
+            height: 12px;
+            background: var(--error-red);
+            border-radius: 50%;
+            animation: attentionPulse 1s infinite;
+        }
+
+        @keyframes attentionPulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* RESPONSIVO PREMIUM ULTRA-RÁPIDO */
+        @media (max-width: 480px) {
+            .container { padding: 0 15px; }
+            .hero-title { font-size: 20px; }
+            .test-items, .test-items-five, .quiz-options { grid-template-columns: 1fr; }
+            .distance-details { grid-template-columns: 1fr; }
+            .chat-bubble { padding: 15px 40px 15px 18px; }
+            .demo-video { width: 180px; height: 135px; font-size: 50px; }
+            
+            /* RESPONSIVO CARD 2 PREMIUM */
+            .message-header { 
+                padding: 30px 18px;
+                min-height: 120px;
+            }
+            
+            .message-title { 
+                font-size: 14px;
+                line-height: 1.4;
+                margin-bottom: 12px;
+            }
+            
+            .message-subtitle { 
+                font-size: 11px;
+                line-height: 1.4;
+                max-width: 100%;
+            }
+
+            .test-items-five .test-item:last-child {
+                grid-column: 1;
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Hypnotic Premium -->
+    <div class="hypnotic-loader" id="hypnoticLoader">
+        <div class="hypnotic-progress" id="hypnoticProgress"></div>
+    </div>
+
+    <!-- Chat Bubble Premium -->
+    <div class="chat-bubble" id="chatBubble">
+        <div class="mic-icon" id="micIcon">🎤</div>
+        <div class="bubble-text" id="bubbleText"></div>
+        <button class="replay-btn" id="replayBtn" onclick="replayAudio()">🔁</button>
+    </div>
+
+    <div class="container">
+        <!-- HERO PREMIUM -->
+        <div class="section hero-section">
+            <h1 class="hero-title">MARCELO D'ÁVILA</h1>
+            <p class="hero-subtitle">
+                Crie automações, sites e links que <strong>FALAM</strong> – sem programação, 100% na nuvem.
+            </p>
+        </div>
+
+        <!-- NAME PREMIUM -->
+        <div class="section name-section">
+            <div class="name-title">Como posso te chamar?</div>
+            <input type="text" class="name-input" id="nameInput" placeholder="Seu primeiro nome…" maxlength="25">
+            <button class="btn" onclick="submitName()">Continuar</button>
+        </div>
+
+        <!-- MENSAGEM PERSONALIZADA PREMIUM COM GÍRIAS REGIONAIS -->
+        <div class="section personalized-message-section" id="messageSection">
+            <div class="message-header">
+                <div class="message-content">
+                    <h2 class="message-title">🎯 <span id="periodGreeting">É tardezinha, uai</span> <span id="userName1">Nome</span> de <span id="userCity1">Cidade</span>!</h2>
+                    <div class="message-subtitle">Uma mensagem especial cruzou o Brasil para chegar até você</div>
+                </div>
+            </div>
+            
+            <div class="map-container">
+                <h3 style="color: var(--color-accent); text-align: center; margin-bottom: 20px;">🗺️ Jornada da Sua Mensagem</h3>
+                
+                <div class="route-visualization">
+                    <div class="route-point">
+                        <div class="point-marker">📍</div>
+                        <div class="point-label">Timóteo-MG</div>
+                    </div>
+                    <div class="route-line">
+                        <div class="traveling-pulse"></div>
+                    </div>
+                    <div class="route-point">
+                        <div class="point-marker">🎯</div>
+                        <div class="point-label" id="destinationLabel">Sua Cidade</div>
+                    </div>
+                </div>
+                
+                <div class="distance-display">
+                    <div class="distance-main" id="distanceMain">Calculando...</div>
+                </div>
+                
+                <div class="distance-details">
+                    <div class="distance-item">
+                        <span class="distance-number" id="distance1">---</span>
+                        <span class="distance-label">quilômetros</span>
+                    </div>
+                    <div class="distance-item">
+                        <span class="distance-number" id="travelTime">---</span>
+                        <span class="distance-label">de viagem</span>
+                    </div>
+                    <div class="distance-item">
+                        <span class="distance-number">0.2</span>
+                        <span class="distance-label">segundos online</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- SEÇÃO CONTEXTUAL PREMIUM COM GÍRIAS COMPLETAS - ALTERAÇÃO 1: REMOVIDO EMOJIS ❤️ -->
+            <div class="contextual-info-premium">
+                <p class="contextual-main-premium">
+                    <strong><span id="periodGreeting2">É tardezinha, uai</span> e você gosta de <span id="food1">Pão de queijo</span>, <span id="weekdayMessage">Terçou, começando semana</span>, né <span id="userName2">Nome</span>!</strong>
+                </p>
+                <p class="contextual-secondary">
+                    São <strong><span id="distance2">XXX</span> quilômetros</strong> de distância até aqui em Timóteo-MG!<br>
+                    <strong><span id="greetingOnly">Uai</span>, você é especial e merece uma atenção única!</strong>
+                </p>
+                <p class="contextual-footer">
+                    Com carinho,<br>📍 Enviado direto de Timóteo-MG
+                </p>
+            </div>
+        </div>
+
+        <!-- DISCOVERY PREMIUM DOURADO COM GLASSMORPHISM -->
+        <div class="section discovery-section" id="discoverySection">
+            <h2 style="text-align: center; margin-bottom: 8px; font-size: 22px; font-weight: 900; color: var(--charcoal-light);">
+                <span id="greetingOnly2">Uai</span>, <span id="regionalDemonym">mineiro</span> <span id="userName3">Nome</span>!
+            </h2>
+            <div style="text-align: center; margin-bottom: 25px; font-weight: 700; color: var(--charcoal-light); font-size: 15px;">
+                O que VOCÊ pode fazer:
+            </div>
+            
+            <div class="discovery-items">
+                <div class="discovery-item">
+                    <span class="discovery-icon">🌐</span>
+                    <span class="discovery-label">Site que fala e pega muita atenção</span>
+                </div>
+                <div class="discovery-item">
+                    <span class="discovery-icon">📱</span>
+                    <span class="discovery-label">Links para redes sociais falantes</span>
+                </div>
+                <div class="discovery-item">
+                    <span class="discovery-icon">💬</span>
+                    <span class="discovery-label">Substitui seu WhatsApp por 100x mais vendas</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- PROPOSTA PREMIUM -->
+        <div class="section" id="proposalSection">
+            <p style="font-size: 18px; font-weight: 700; margin-bottom: 20px; text-align: center; line-height: 1.4;">
+                <span id="userName4">Nome</span>, se eu te falasse que com 1 contrato você coloca de mil a três mil reais no bolso, acreditaria?
+            </p>
+            <div style="background: var(--gradient-gold); color: var(--color-cta); padding: 15px 20px; border-radius: 15px; font-weight: 800; margin: 15px 0; text-align: center; line-height: 1.3;">
+                Olha esse vídeo de 15 segundos que fiz para você, <span id="userName5">Nome</span> de <span id="userCity3">Cidade</span>:
+            </div>
+            
+            <div style="text-align: center;">
+                <div class="demo-video" id="demoVideo" onclick="playVideo()">
+                    📱
+                    <div class="play-btn" id="playBtn">▶️</div>
+                </div>
+                <p style="margin-top: 15px; font-weight: 600; color: var(--color-text-secondary);">
+                    Demonstração ao vivo - Clique para assistir
+                </p>
+            </div>
+        </div>
+
+        <!-- TESTE MENTAL PREMIUM SINCRONIZADO -->
+        <div class="section mental-test" id="mentalTest">
+            <div style="font-size: 18px; font-weight: 700; margin-bottom: 25px;">
+                🧠 <span id="userName6">Nome</span>, sua mente não é sua amiga e vou te provar isso agora.
+            </div>
+            
+            <div class="test-items-five" id="testItems">
+                <div class="test-item" id="testCar">
+                    <span class="test-icon">🚗</span>
+                    <span>Pense num Carro</span>
+                </div>
+                <div class="test-item" id="testPlane">
+                    <span class="test-icon">✈️</span>
+                    <span>Pense num Avião</span>
+                </div>
+                <div class="test-item" id="testRooster">
+                    <span class="test-icon">🐓</span>
+                    <span>Pense num Galo</span>
+                </div>
+                <div class="test-item" id="testAcerola">
+                    <span class="test-icon">🟠</span>
+                    <span>NÃO pense em uma acerola</span>
+                </div>
+                <div class="test-item" id="testLemon">
+                    <span class="test-icon">🍋</span>
+                    <span>NÃO pense em limão azedo</span>
+                </div>
+            </div>
+            
+            <div class="revelation" id="revelation">
+                <h3 style="color: var(--error-red); margin-bottom: 15px; font-size: 18px;">🤯 <span id="userName10">Nome</span>, Por que você pensou mesmo eu pedindo para NÃO pensar?</h3>
+                <p style="font-weight: 600; line-height: 1.5; font-size: 15px;">
+                    E sabe o que mais sua mente vai fazer?<br>
+                    <strong>Vai tentar te SABOTAR quando eu mostrar como ganhar milhares de reais por mês, <span id="userName11">Nome</span>!</strong>
+                </p>
+            </div>
+        </div>
+
+        <!-- QUIZ PREMIUM -->
+        <div class="section" id="quizSection">
+            <h2 style="font-size: 18px; font-weight: 800; color: var(--color-accent); text-align: center; margin-bottom: 20px; line-height: 1.3;">
+                Quanto você cobraria por esse serviço, <span id="userName7">Nome</span>? Escolha um valor, <span id="greetingOnly3">Uai</span>!
+            </h2>
+            
+            <div class="quiz-options">
+                <div class="quiz-option" onclick="selectOption('500', this)">
+                    <span class="quiz-emoji">💰</span>
+                    <span>R$ 500,00</span>
+                </div>
+                <div class="quiz-option" onclick="selectOption('1500', this)">
+                    <span class="quiz-emoji">💎</span>
+                    <span>R$ 1.500,00</span>
+                </div>
+                <div class="quiz-option" onclick="selectOption('2000', this)">
+                    <span class="quiz-emoji">🏆</span>
+                    <span>R$ 2.000,00</span>
+                </div>
+                <div class="quiz-option" onclick="selectOption('3000', this)">
+                    <span class="quiz-emoji">👑</span>
+                    <span>R$ 3.000,00</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- OFERTA PREMIUM -->
+        <div class="section offer-section" id="offerSection">
+            <h2 style="margin-bottom: 20px; font-size: 19px;">
+                🎯 Relaxa, <span id="userName8">Nome</span>!<br>Eu quebro essa resistência AGORA!
+            </h2>
+            
+            <div style="font-size: 17px; margin-bottom: 15px; font-weight: 700;" id="offerChosen">
+                Você escolheu R$ <span id="chosenValue">1.500</span>,00
+            </div>
+            
+            <div class="offer-price">Mas hoje é só R$ 27,00!</div>
+            
+            <div class="offer-savings" id="offerSavings">
+                Economia de R$ <span id="savingsAmount">1.473</span>,00!
+            </div>
+            
+            <div style="background: rgba(255, 71, 87, 0.2); border: 3px solid var(--error-red); border-radius: 18px; padding: 15px; margin: 20px 0;">
+                <p style="color: var(--error-red); font-weight: 700; font-size: 15px;">
+                    ⚡ Acaba HOJE para <span id="userCity4">sua cidade</span>!<br>
+                    Preço sobe a cada semana!
+                </p>
+            </div>
+        </div>
+
+        <!-- CHECKOUT PREMIUM -->
+        <div class="section" id="checkoutSection">
+            <div style="font-size: 20px; font-weight: 900; color: var(--color-accent); text-align: center; margin-bottom: 25px;">
+                💳 Finalizar Pedido - R$ 27,00
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Seu melhor email:</label>
+                <input type="email" class="form-input" id="userEmail" placeholder="seu@email.com">
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">WhatsApp para avisos VIP:</label>
+                <input type="tel" class="form-input" id="userWhatsapp" placeholder="(11) 99999-9999">
+            </div>
+            
+            <button class="btn" onclick="finalizeOrder()" style="background: var(--color-cta); margin-top: 20px;">
+                🚀 CONFIRMAR PEDIDO - R$ 27,00 🚀
+            </button>
+        </div>
+
+        <!-- WHATSAPP FINAL PREMIUM -->
+        <div class="section offer-section" id="whatsappSection">
+            <div style="font-size: 17px; margin-bottom: 20px; font-weight: 700;" id="whatsappText">
+                Perfeito, <span id="userName9">Nome</span>! Te vejo do outro lado!
+            </div>
+            <button class="whatsapp-btn" onclick="openWhatsApp()">
+                📱 Abrir WhatsApp e Receber Acesso
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // CONFIGURAÇÕES ULTRA-FLUIDAS PREMIUM ULTIMATE SINCRONIZADAS
+        const CONFIG = {
+            VOICE_ENABLED: true,
+            TTS_SPEED: 1.1,  // Mais rápido para fluidez
+            PAUSE_BETWEEN_SECTIONS: 1200,  // Sincronizado para não pular cards
+            SMART_TRANSITION: true,  // Transição inteligente
+            SYNC_VISUAL_AUDIO: true,  // Sincroniza visual + áudio perfeitamente
+            MENTAL_TEST_DELAYS: {
+                INTRO: 1800,  // Otimizado para sincronização
+                CAR_TO_PLANE: 900,  // Sincronizado
+                PLANE_TO_ROOSTER: 1100,  // Sincronizado
+                ROOSTER_PAUSE: 1400,  // Sincronizado
+                PAUSE_TO_ACEROLA: 700,  // Sincronizado
+                ACEROLA_TO_LEMON: 900,  // Sincronizado
+                LEMON_TO_REVELATION: 1400  // Sincronizado
+            }
+        };
+
+        // DADOS REGIONAIS PREMIUM CORRIGIDOS - TODOS OS 27 ESTADOS
+        const CULTURAL_DATA = {
+            'AC': { 
+                greetings: ['Arre diacho', 'Espocar'], 
+                foods: ['Baixaria', 'Tacacá'],
+                demonym: 'acriano'
+            },
+            'AL': { 
+                greetings: ['Eita gota', 'Biboca'], 
+                foods: ['Sururu ao coco', 'Caldinho de massunin'],
+                demonym: 'alagoano'
+            },
+            'AP': { 
+                greetings: ['Pai d\'égua', 'Pomba lesa'], 
+                foods: ['Camarão no bafo', 'Maniçoba'],
+                demonym: 'amapaense'
+            },
+            'AM': { 
+                greetings: ['De rocha', 'Telezé'], 
+                foods: ['Tambaqui assado', 'X-caboquinho'],
+                demonym: 'amazonense'
+            },
+            'BA': { 
+                greetings: ['Oxente', 'Comer água'], 
+                foods: ['Acarajé', 'Vatapá'],
+                demonym: 'baiano'
+            },
+            'CE': { 
+                greetings: ['Arre égua', 'Acunhar'], 
+                foods: ['Baião de dois', 'Galinha à cabidela'],
+                demonym: 'cearense'
+            },
+            'DF': { 
+                greetings: ['Véi', 'Pagar vexa'], 
+                foods: ['Galinhada', 'Caldo de piranha'],
+                demonym: 'brasiliense'
+            },
+            'ES': { 
+                greetings: ['Massa', 'Chapoca'], 
+                foods: ['Moqueca capixaba', 'Torta capixaba'],
+                demonym: 'capixaba'
+            },
+            'GO': { 
+                greetings: ['Rensga', 'Trupicar'], 
+                foods: ['Empadão goiano', 'Arroz com pequi'],
+                demonym: 'goiano'
+            },
+            'MA': { 
+                greetings: ['Éguas', 'Té doido'], 
+                foods: ['Arroz de cuxá', 'Peixe frito com farinha'],
+                demonym: 'maranhense'
+            },
+            'MT': { 
+                greetings: ['Agora quando?', 'Bocó de fivela'], 
+                foods: ['Mojica de pintado', 'Maria Isabel'],
+                demonym: 'mato-grossense'
+            },
+            'MS': { 
+                greetings: ['Alas', 'Dar um pião'], 
+                foods: ['Sopa paraguaia', 'Chipa'],
+                demonym: 'sul-mato-grossense'
+            },
+            'MG': { 
+                greetings: ['Uai', 'Trem'], 
+                foods: ['Tutu à mineira', 'Pão de queijo'],
+                demonym: 'mineiro'
+            },
+            'PA': { 
+                greetings: ['Égua', 'De rocha'], 
+                foods: ['Pato no tucupi', 'Tacacá'],
+                demonym: 'paraense'
+            },
+            'PB': { 
+                greetings: ['Oxente', 'Arengar'], 
+                foods: ['Buchada de bode', 'Arrumadinho'],
+                demonym: 'paraibano'
+            },
+            'PR': { 
+                greetings: ['Piá', 'Pila'], 
+                foods: ['Barreado', 'Pinhão'],
+                demonym: 'paranaense'
+            },
+            'PE': { 
+                greetings: ['Visse', 'Pantim'], 
+                foods: ['Feijoada', 'Sarapatel'],
+                demonym: 'pernambucano'
+            },
+            'PI': { 
+                greetings: ['Mangar', 'Arengar'], 
+                foods: ['Maria Isabel', 'Capote'],
+                demonym: 'piauiense'
+            },
+            'RJ': { 
+                greetings: ['Mermão', 'Sinistro'], 
+                foods: ['Feijoada', 'Filé Oswaldo Aranha'],
+                demonym: 'carioca'
+            },
+            'RN': { 
+                greetings: ['Arrochado', 'Ginga'], 
+                foods: ['Carne de sol com macaxeira', 'Ginga com tapioca'],
+                demonym: 'potiguar'
+            },
+            'RS': { 
+                greetings: ['Bah', 'Tri'], 
+                foods: ['Churrasco', 'Arroz de carreteiro'],
+                demonym: 'gaúcho'
+            },
+            'RO': { 
+                greetings: ['Pocar', 'Moage'], 
+                foods: ['Caldeirada de peixe', 'Pirarucu à casaca'],
+                demonym: 'rondoniense'
+            },
+            'RR': { 
+                greetings: ['Peba', 'Arrochar'], 
+                foods: ['Damurida', 'Caldeirada'],
+                demonym: 'roraimense'
+            },
+            'SC': { 
+                greetings: ['Tchô', 'Baita'], 
+                foods: ['Marreco com repolho roxo', 'Anchova grelhada'],
+                demonym: 'catarinense'
+            },
+            'SP': { 
+                greetings: ['Firmeza', 'Sinistro'], 
+                foods: ['Virado à paulista', 'Sanduíche de mortadela'],
+                demonym: 'paulista'
+            },
+            'SE': { 
+                greetings: ['Oxente', 'Arengar'], 
+                foods: ['Moqueca sergipana', 'Caranguejo'],
+                demonym: 'sergipano'
+            },
+            'TO': { 
+                greetings: ['Arrodiar', 'Mangar'], 
+                foods: ['Chambari', 'Peixe na telha'],
+                demonym: 'tocantinense'
+            }
+        };
+
+        // SISTEMA PREMIUM DE PERÍODOS E DIAS DA SEMANA
+        const TIME_SYSTEM = {
+            periods: {
+                getGreeting: (hour, regionalGreeting) => {
+                    if (hour >= 0 && hour <= 5) return `É madrugada, ${regionalGreeting.toLowerCase()}`;
+                    if (hour >= 6 && hour <= 11) return `É bom dia, ${regionalGreeting.toLowerCase()}`;
+                    if (hour >= 12 && hour <= 17) return `É tardezinha, ${regionalGreeting.toLowerCase()}`;
+                    if (hour >= 18 && hour <= 23) return `É boa noite, ${regionalGreeting.toLowerCase()}`;
+                    return `É tardezinha, ${regionalGreeting.toLowerCase()}`;
+                }
+            },
+            weekdays: {
+                0: 'Domingou, dia de descanso',
+                1: 'Segundou, começando semana',
+                2: 'Terçou, começando semana',
+                3: 'Quartou, já é meio de semana',
+                4: 'Quintou, quase fim de semana',
+                5: 'Sextou, é final de semana',
+                6: 'Sabadou, então é fim de semana'
+            }
+        };
+
+        // VARIÁVEIS GLOBAIS PREMIUM
+        let userData = {
+            name: '',
+            city: 'Ipatinga',
+            state: 'MG',
+            distance: 16,
+            travelTime: '12min',
+            greetingOnly: 'Uai',
+            periodGreeting: 'É tardezinha, uai',
+            food: 'Pão de queijo',
+            demonym: 'mineiro',
+            weekdayMessage: 'Terçou, começando semana',
+            selectedValue: '',
+            email: '',
+            whatsapp: ''
+        };
+
+        let speechQueue = [];
+        let isSpeaking = false;
+        let lastSpokenText = '';
+        let currentSectionIndex = 0;
+
+        // === SISTEMA HYPNOTIC LOADER PREMIUM ===
+        function updateHypnoticProgress(progress) {
+            const progressBar = document.getElementById('hypnoticProgress');
+            if (progressBar) {
+                progressBar.style.width = `${progress}%`;
+                
+                if (progress >= 100) {
+                    setTimeout(() => {
+                        document.getElementById('hypnoticLoader').style.display = 'none';
+                    }, 500);
+                }
+            }
+        }
+
+        // === SISTEMA TTS ULTRA-FLUIDO SINCRONIZADO ===
+        async function speak(text, display = '') {
+            speechQueue.push({ text, display });
+            if (!isSpeaking) {
+                processNextSpeech();
+            }
+        }
+
+        async function processNextSpeech() {
+            if (speechQueue.length === 0) {
+                isSpeaking = false;
+                return;
+            }
+
+            isSpeaking = true;
+            const { text, display } = speechQueue.shift();
+            
+            // Atualizar loader hipnótico
+            const progress = Math.min(95, (currentSectionIndex * 12) + Math.random() * 8);
+            updateHypnoticProgress(progress);
+            
+            try {
+                await playTTS(text, display);
+            } catch (error) {
+                console.warn('TTS Error:', error);
+            }
+            
+            // Pausa otimizada para fluidez
+            setTimeout(() => {
+                processNextSpeech();
+            }, 250);
+        }
+
+        async function playTTS(text, display) {
+            if (!CONFIG.VOICE_ENABLED || !('speechSynthesis' in window)) {
+                return;
+            }
+
+            lastSpokenText = text;
+            showBubble(display || text.substring(0, 45) + '...');
+
+            return new Promise((resolve, reject) => {
+                try {
+                    speechSynthesis.cancel();
+                    
+                    const utterance = new SpeechSynthesisUtterance(cleanTextForSpeech(text));
+                    
+                    const voices = speechSynthesis.getVoices();
+                    const brazilianVoice = voices.find(voice => 
+                        voice.lang.includes('pt-BR') || voice.name.includes('Brazil')
+                    );
+                    
+                    if (brazilianVoice) {
+                        utterance.voice = brazilianVoice;
+                    }
+                    
+                    utterance.rate = CONFIG.TTS_SPEED;
+                    utterance.pitch = 1.0;
+                    utterance.volume = 1.0;
+
+                    utterance.onend = () => {
+                        setTimeout(() => {
+                            completeBubble();
+                            resolve();
+                        }, 500);
+                    };
+
+                    utterance.onerror = (event) => {
+                        hideBubble();
+                        reject(new Error(event.error));
+                    };
+
+                    speechSynthesis.speak(utterance);
+
+                } catch (error) {
+                    hideBubble();
+                    reject(error);
+                }
+            });
+        }
+
+        function cleanTextForSpeech(text) {
+            return text
+                .replace(/[🌍🎯❓💰📱🎁💡📖🎤✨⚡🔥💎👑🏆💳📊🗺️🎙️📝👁️🚗✈️🐓🍋🟠❤️]/g, '')
+                .replace(/\*\*/g, '')
+                .replace(/\b27\b/g, 'vinte e sete')
+                .replace(/R\$\s*(\d+)/g, '$1 reais')
+                .replace(/\buai\b/gi, 'uái')
+                .replace(/\boxente\b/gi, 'oxente')
+                .replace(/\btchô\b/gi, 'tchô')
+                .replace(/\bbah\b/gi, 'bah')
+                .trim();
+        }
+
+        // === SISTEMA CHAT BUBBLE ULTRA-RÁPIDO ===
+        function showBubble(text) {
+            const bubble = document.getElementById('chatBubble');
+            const bubbleText = document.getElementById('bubbleText');
+            const micIcon = document.getElementById('micIcon');
+            
+            bubbleText.textContent = text;
+            micIcon.textContent = '🎤';
+            
+            bubble.classList.remove('completed');
+            bubble.classList.add('active');
+        }
+
+        function completeBubble() {
+            const bubble = document.getElementById('chatBubble');
+            const micIcon = document.getElementById('micIcon');
+            
+            bubble.classList.add('completed');
+            micIcon.classList.add('completed');
+            micIcon.textContent = '✓';
+            
+            setTimeout(hideBubble, 2000);  // Reduzido de 3500ms
+        }
+
+        function hideBubble() {
+            const bubble = document.getElementById('chatBubble');
+            bubble.classList.remove('active', 'completed');
+        }
+
+        function replayAudio() {
+            if (lastSpokenText) {
+                speechSynthesis.cancel();
+                speechQueue = [];
+                isSpeaking = false;
+                speak(lastSpokenText);
+            }
+        }
+
+        // === TRANSIÇÃO INTELIGENTE SINCRONIZADA ===
+        function showNextSection(sectionId, callback) {
+            // Aguarda a fala terminar ANTES de mostrar próxima seção
+            waitForSpeechAndContinue(() => {
+                const section = document.getElementById(sectionId);
+                if (section) {
+                    section.classList.add('active');
+                    section.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+                if (callback) {
+                    setTimeout(callback, 800); // Pausa sincronizada para começar nova fala
+                }
+            });
+        }
+
+        // === GEOLOCALIZAÇÃO PREMIUM ===
+        async function detectLocation() {
+            try {
+                const response = await fetch('https://get.geojs.io/v1/ip/geo.json');
+                const data = await response.json();
+                
+                if (data.city && data.region) {
+                    userData.city = data.city;
+                    userData.state = data.region;
+                    
+                    // Dados regionais PREMIUM
+                    const culturalInfo = CULTURAL_DATA[data.region] || CULTURAL_DATA['MG'];
+                    userData.greetingOnly = culturalInfo.greetings[Math.floor(Math.random() * culturalInfo.greetings.length)];
+                    userData.food = culturalInfo.foods[Math.floor(Math.random() * culturalInfo.foods.length)];
+                    userData.demonym = culturalInfo.demonym;
+                    
+                    // Calcular distância (Timóteo-MG para cidade do usuário)
+                    if (data.latitude && data.longitude) {
+                        const distance = calculateDistance(-19.5797, -42.6297, data.latitude, data.longitude);
+                        userData.distance = Math.round(distance);
+                        userData.travelTime = estimateTravelTime(userData.distance);
+                    }
+                }
+            } catch (error) {
+                console.warn('Location detection failed:', error);
+                // Usar dados padrão para Ipatinga-MG
+                userData.greetingOnly = 'Uai';
+                userData.food = 'Pão de queijo';
+                userData.demonym = 'mineiro';
+            }
+            
+            // SISTEMA PREMIUM DE DETECÇÃO DE TEMPO
+            const now = new Date();
+            const hour = now.getHours();
+            const dayOfWeek = now.getDay();
+            
+            // Aplicar sistema premium de períodos
+            userData.periodGreeting = TIME_SYSTEM.periods.getGreeting(hour, userData.greetingOnly);
+            userData.weekdayMessage = TIME_SYSTEM.weekdays[dayOfWeek];
+            
+            updateLocationDisplay();
+        }
+
+        function calculateDistance(lat1, lon1, lat2, lon2) {
+            const R = 6371;
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLon = (lon2 - lon1) * Math.PI / 180;
+            const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                      Math.sin(dLon/2) * Math.sin(dLon/2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            return R * c;
+        }
+
+        function estimateTravelTime(distanceKm) {
+            const hours = distanceKm / 80;
+            return hours < 1 ? `${Math.round(hours * 60)}min` : 
+                   hours < 10 ? `${Math.round(hours * 10) / 10}h` : `${Math.round(hours)}h`;
+        }
+
+        function updateLocationDisplay() {
+            // Atualizar elementos com dados da localização PREMIUM
+            const elements = {
+                'destinationLabel': `${userData.city}-${userData.state}`,
+                'distanceMain': `${userData.distance} quilômetros`,
+                'distance1': userData.distance,
+                'distance2': userData.distance,
+                'travelTime': userData.travelTime,
+                'periodGreeting': userData.periodGreeting,
+                'periodGreeting2': userData.periodGreeting,
+                'greetingOnly': userData.greetingOnly,
+                'greetingOnly2': userData.greetingOnly,
+                'greetingOnly3': userData.greetingOnly,
+                'food1': userData.food,
+                'weekdayMessage': userData.weekdayMessage,
+                'weekdayMessage2': userData.weekdayMessage,
+                'regionalDemonym': userData.demonym,
+                'userCity1': userData.city,
+                'userCity2': userData.city,
+                'userCity3': userData.city,
+                'userCity4': userData.city
+            };
+            
+            Object.keys(elements).forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.textContent = elements[id];
+                }
+            });
+        }
+
+        // === FLUXO PRINCIPAL SINCRONIZADO ===
+        function submitName() {
+            const nameInput = document.getElementById('nameInput');
+            const name = nameInput.value.trim();
+            
+            if (!name) {
+                nameInput.classList.add('error');
+                nameInput.placeholder = 'Por favor, digite seu nome';
+                showBubble('Digite seu nome para continuar!');
+                
+                setTimeout(() => {
+                    nameInput.classList.remove('error');
+                    nameInput.placeholder = 'Seu primeiro nome…';
+                }, 2000);
+                
+                return;
+            }
+            
+            userData.name = name;
+            updateAllNameElements();
+            currentSectionIndex = 1;
+            
+            // Esconder seções iniciais
+            document.querySelector('.hero-section').style.display = 'none';
+            document.querySelector('.name-section').style.display = 'none';
+            
+            // Mostrar mensagem personalizada corretamente
+            setTimeout(() => {
+                showPersonalizedMessage();
+            }, 600);
+        }
+
+        function showPersonalizedMessage() {
+            const section = document.getElementById('messageSection');
+            section.classList.add('active');
+            section.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
+            setTimeout(() => {
+                speak(
+                    `${userData.periodGreeting} ${userData.name}! Você está em ${userData.city}! São ${userData.distance} quilômetros de distância até aqui! ${userData.weekdayMessage} e você gosta de ${userData.food}, né? Olha que incrível: criei essa mensagem SÓ PRA VOCÊ!`,
+                    "🎯 Mensagem telepática personalizada!"
+                );
+                
+                // Aguarda fala terminar ANTES de mostrar discovery
+                showNextSection('discoverySection', () => {
+                    currentSectionIndex = 2;
+                    // ALTERAÇÃO 2: Expandindo público-alvo
+                    speak(
+                        `${userData.greetingOnly}, ${userData.demonym} ${userData.name}! Imagina vender isso a clínicas médicas, dentistas, imobiliárias, contadores, qualquer área precisa, ${userData.name}! Quantas vendas faria no dia? E no mês? Olha o que você pode criar!`,
+                        "💎 Discovery com gíria regional..."
+                    );
+                    
+                    // Aguarda fala terminar ANTES de mostrar proposta
+                    showNextSection('proposalSection', () => {
+                        currentSectionIndex = 3;
+                        speak(
+                            `${userData.name}, se eu te falasse que com um contrato você coloca de mil a três mil reais no bolso, acreditaria? Olha esse vídeo de 15 segundos que fiz para você, ${userData.name} de ${userData.city}!`,
+                            "💡 Revelando proposta personalizada..."
+                        );
+                    });
+                });
+            }, 800);
+        }
+
+        function playVideo() {
+            const video = document.getElementById('demoVideo');
+            const playBtn = document.getElementById('playBtn');
+            
+            video.style.background = 'linear-gradient(45deg, #10b981, #059669)';
+            video.style.color = 'white';
+            playBtn.textContent = '⏸️';
+            
+            // Simular vídeo por 12 segundos
+            setTimeout(() => {
+                video.style.background = 'linear-gradient(45deg, #F8F5F0, #E8E5E0)';
+                video.style.color = '#33353A';
+                playBtn.textContent = '✅';
+                
+                // Feedback e transição para teste mental
+                setTimeout(() => {
+                    speak(
+                        `PERFEITO ${userData.name}! Sua mente analítica já percebeu o potencial. Isso que você viu gera de mil a três mil reais por contrato. E você pode dominar essa tecnologia hoje!`,
+                        "🧠 Mente analítica detectada!"
+                    );
+                    
+                    // Aguarda fala terminar ANTES de mostrar teste mental
+                    showNextSection('mentalTest', () => {
+                        currentSectionIndex = 4;
+                        startMentalTest();
+                    });
+                }, 800);
+            }, 12000);
+        }
+
+        // === TESTE MENTAL ULTRA-RÁPIDO SINCRONIZADO ===
+        function startMentalTest() {
+            // Seção já foi ativada pela função anterior
+            
+            // 1. Introdução
+            speak(`${userData.name}, sua mente não é sua amiga e vou te provar isso agora.`, "🧠 Sua mente não é sua amiga...");
+            
+            // 2. Sequência sincronizada
+            setTimeout(() => {
+                document.getElementById('testCar').classList.add('visible');
+                speak("Pense num Carro.", "🚗 Pense num Carro");
+            }, CONFIG.MENTAL_TEST_DELAYS.INTRO);
+            
+            setTimeout(() => {
+                document.getElementById('testPlane').classList.add('visible');
+                speak("Pense num Avião.", "✈️ Pense num Avião");
+            }, CONFIG.MENTAL_TEST_DELAYS.INTRO + CONFIG.MENTAL_TEST_DELAYS.CAR_TO_PLANE);
+            
+            setTimeout(() => {
+                document.getElementById('testRooster').classList.add('visible');
+                speak("Pense num Galo.", "🐓 Pense num Galo");
+            }, CONFIG.MENTAL_TEST_DELAYS.INTRO + CONFIG.MENTAL_TEST_DELAYS.CAR_TO_PLANE + CONFIG.MENTAL_TEST_DELAYS.PLANE_TO_ROOSTER);
+            
+            // 3. Pausa e continuação sincronizada
+            setTimeout(() => {
+                waitForSpeechAndContinue(() => {
+                    setTimeout(() => {
+                        // Mostrar ACEROLA
+                        const acerolaItem = document.getElementById('testAcerola');
+                        acerolaItem.classList.add('visible', 'forbidden');
+                        speak("Não pense em uma acerola.", "🟠 NÃO pense em uma acerola...");
+                        
+                        setTimeout(() => {
+                            // Mostrar LIMÃO
+                            const lemonItem = document.getElementById('testLemon');
+                            lemonItem.classList.add('visible', 'forbidden');
+                            speak("NÃO pense em limão azedo.", "🍋 NÃO pense em limão azedo...");
+                            
+                            setTimeout(() => {
+                                waitForSpeechAndContinue(() => {
+                                    const revelation = document.getElementById('revelation');
+                                    revelation.style.display = 'block';
+                                    revelation.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                    
+                                    // ALTERAÇÃO 3: Personalização no final do teste mental
+                                    speak(
+                                        `${userData.name}, Por que você pensou mesmo eu pedindo para NÃO pensar? E sabe o que mais sua mente vai fazer? Vai tentar te SABOTAR quando eu mostrar como ganhar milhares de reais por mês, ${userData.name}!`,
+                                        "⚡ Por que você pensou?"
+                                    );
+                                    
+                                    // Aguarda fala terminar ANTES de mostrar quiz
+                                    showNextSection('quizSection', () => {
+                                        currentSectionIndex = 5;
+                                        speak(
+                                            `Quanto você cobraria por esse serviço, ${userData.name}? Escolha um valor, ${userData.greetingOnly}!`,
+                                            "🎮 Quiz com gíria regional!"
+                                        );
+                                    });
+                                });
+                            }, CONFIG.MENTAL_TEST_DELAYS.ACEROLA_TO_LEMON);
+                        }, CONFIG.MENTAL_TEST_DELAYS.PAUSE_TO_ACEROLA);
+                    }, CONFIG.MENTAL_TEST_DELAYS.ROOSTER_PAUSE);
+                });
+            }, CONFIG.MENTAL_TEST_DELAYS.INTRO + CONFIG.MENTAL_TEST_DELAYS.CAR_TO_PLANE + CONFIG.MENTAL_TEST_DELAYS.PLANE_TO_ROOSTER + 2200);
+        }
+
+        function selectOption(value, element) {
+            // Remover seleção de todas as opções
+            document.querySelectorAll('.quiz-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            
+            // Adicionar seleção à opção clicada
+            element.classList.add('selected');
+            userData.selectedValue = value;
+            
+            setTimeout(() => {
+                // Aguarda seleção visual e mostra oferta
+                showNextSection('offerSection', () => {
+                    currentSectionIndex = 6;
+                    
+                    // Atualizar valores
+                    document.getElementById('chosenValue').textContent = userData.selectedValue;
+                    const savings = parseInt(userData.selectedValue) - 27;
+                    document.getElementById('savingsAmount').textContent = savings.toLocaleString('pt-BR');
+                    
+                    speak(
+                        `Você escolheu ${userData.selectedValue} reais! Sua mente está sussurrando que é muito caro, não vai dar certo. MENTIRA! Hoje é só vinte e sete reais! Sua mente acabou de relaxar, né?`,
+                        "💰 Oferta final revelada!"
+                    );
+                    
+                    // Aguarda fala terminar ANTES de mostrar checkout
+                    showNextSection('checkoutSection', () => {
+                        currentSectionIndex = 7;
+                        speak("Agora só falta finalizar! Preenche seus dados e clique no botão gigante para começarmos!", "💳 Finalizando pedido...");
+                    });
+                });
+            }, 1000);
+        }
+
+        function finalizeOrder() {
+            const email = document.getElementById('userEmail').value.trim();
+            const whatsapp = document.getElementById('userWhatsapp').value.trim();
+            
+            if (!email || !email.includes('@')) {
+                showBubble('Digite um email válido!');
+                return;
+            }
+            
+            if (!whatsapp || whatsapp.length < 10) {
+                showBubble('Digite um WhatsApp válido!');
+                return;
+            }
+            
+            userData.email = email;
+            userData.whatsapp = whatsapp;
+            
+            document.getElementById('checkoutSection').classList.remove('active');
+            
+            // Transição final sincronizada
+            setTimeout(() => {
+                const section = document.getElementById('whatsappSection');
+                section.classList.add('active');
+                section.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                currentSectionIndex = 8;
+                
+                // Completar loader
+                updateHypnoticProgress(100);
+                
+                setTimeout(() => {
+                    speak(`Perfeito, ${userData.name}! Te vejo do outro lado no WhatsApp!`, "📱 Redirecionando para WhatsApp...");
+                }, 800);
+            }, 600);
+        }
+
+        function openWhatsApp() {
+            const message = encodeURIComponent(
+                `Olá Marcelo! Sou ${userData.name} de ${userData.city}-${userData.state}. ` +
+                `${userData.greetingOnly} ` +
+                `Acabei de finalizar o pedido do curso por R$ 27,00. ` +
+                `Email: ${userData.email} | WhatsApp: ${userData.whatsapp} | ` +
+                `Valor escolhido: R$ ${userData.selectedValue},00. ` +
+                `Contexto: ${userData.periodGreeting}, ${userData.weekdayMessage}, gosto de ${userData.food}. ` +
+                `Por favor, me envie o acesso!`
+            );
+            
+            window.open(`https://wa.me/5531987654321?text=${message}`, '_blank');
+        }
+
+        function updateAllNameElements() {
+            for (let i = 1; i <= 11; i++) {  // Aumentado para 11 devido ao novo userName11
+                const element = document.getElementById(`userName${i}`);
+                if (element) {
+                    element.textContent = userData.name;
+                }
+            }
+        }
+
+        // === FUNÇÃO SINCRONIZADA PARA AGUARDAR SPEECH ===
+        function waitForSpeechAndContinue(callback) {
+            const checkSpeech = () => {
+                if (!isSpeaking && speechQueue.length === 0) {
+                    setTimeout(callback, CONFIG.PAUSE_BETWEEN_SECTIONS);
+                } else {
+                    setTimeout(checkSpeech, 400);  // Check mais frequente para responsividade
+                }
+            };
+            checkSpeech();
+        }
+
+        // === INICIALIZAÇÃO ULTRA-FLUIDA ===
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 Iniciando Marcelo D\'Ávila SINCRONIZADO Experience');
+            
+            // Detectar localização premium
+            detectLocation();
+            
+            // Event listener para Enter no campo nome
+            const nameInput = document.getElementById('nameInput');
+            nameInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    submitName();
+                }
+            });
+            
+            // Preparar vozes premium
+            if ('speechSynthesis' in window) {
+                speechSynthesis.getVoices();
+                speechSynthesis.addEventListener('voiceschanged', function() {
+                    console.log('🗣️ Vozes Premium carregadas:', speechSynthesis.getVoices().length);
+                });
+            }
+            
+            // Inicializar loader hipnótico
+            updateHypnoticProgress(5);
+            
+            console.log('✅ Sistema SINCRONIZADO iniciado!');
+        });
+
+        // === CLEANUP PREMIUM ===
+        window.addEventListener('beforeunload', function() {
+            if ('speechSynthesis' in window) {
+                speechSynthesis.cancel();
+            }
+        });
+    </script>
+</body>
+</html>
